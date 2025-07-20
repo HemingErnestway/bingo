@@ -12,7 +12,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100lvh;
+  height: 100svh;
 }
 
 .container {
@@ -43,6 +43,7 @@ body {
 .selected {
   background-color: #50bbff;
   color: #00548a;
+  font-weight: bold;
 }
 
 @media (width <= 1000px) {
