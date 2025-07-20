@@ -43,7 +43,6 @@ body {
 .selected {
   background-color: #50bbff;
   color: #00548a;
-  font-weight: bold;
 }
 
 @media (width <= 1000px) {
