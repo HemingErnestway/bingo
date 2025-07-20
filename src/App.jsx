@@ -115,7 +115,7 @@ function shuffle(array) {
 function isAfterSeven() {
   const now = new Date()
   const moscowHours = (now.getUTCHours() + 3) % 24
-  return moscowHours >= 23
+  return moscowHours >= 1
 }
 
 function getTodayKey() {
