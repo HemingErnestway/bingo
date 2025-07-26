@@ -89,6 +89,22 @@ export function App() {
   return (
     <div className="wrapper">
       <div className="container">
+        <div className="text-container">
+          <p>Бинго фраз и действий Дмитрия Викторовича.</p>
+          <div className="columns">
+            <p>
+              Всего карточек в паке сейчас: {bingo.phrases.length}. Берутся 25 рандомных, у каждого игрока разные.
+            </p>
+            <p>
+              Когда ДВ ультует своей своей коронной фразой/действием, нужно выбрать карточку.
+            </p>
+            <p>
+              Игрок, собравший бинго, должен незамедлительно включить микрофон и заорать «ГОООЙДА!» на весь дискорд.
+            </p>
+          </div>
+        </div> 
+      </div>
+      <div className="container">
         <Grid 
           phrases={shuffledPhrases} 
           setPhrases={setShuffledPhrases}
