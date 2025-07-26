@@ -58,35 +58,32 @@ export function App() {
   }, [shuffledPhrases, wasBingo]) 
 
   useEffect(() => {
-    const stored = localStorage.getItem("bingoState")
-    const today = getTodayKey()
-    const afterSeven = isAfterSeven()
+    const storedState = localStorage.getItem("bingoState")
+    const currentKey = getBingoKeyUTC()
 
-    if (stored) {
-      const { date, phrases: currentPhrases } = JSON.parse(stored)
+    if (storedState) {
+      const { date: storedKey, phrases: storedPhrases } = JSON.parse(storedState)
 
-      if (date === today || !afterSeven) {
-        setShuffledPhrases(currentPhrases)
+      if (currentKey === storedKey) {
+        setShuffledPhrases(storedPhrases)
         return
-      }
+      } 
     }
 
     const newPhrases = shuffle(bingo.phrases).slice(0, 25)
 
-    const reshapedPhrases = newPhrases.map(
-      phrase => ({
-        text: phrase,
-        selected: false,
-      })
-    )
+    const reshapedPhrases = newPhrases.map(phrase => ({
+      text: phrase,
+      selected: false,
+    }))
 
     localStorage.setItem("bingoState", JSON.stringify({ 
-      date: today, 
+      date: currentKey, 
       phrases: reshapedPhrases,
       wasBingo: false,
     }))
 
-    setShuffledPhrases(reshapedPhrases)
+    setShuffledPhrases(reshapedPhrases)   
   }, [])
 
   return (
@@ -112,15 +109,25 @@ function shuffle(array) {
   return arr
 }
 
-function isAfterSeven() {
+function getBingoKeyUTC() {
   const now = new Date()
-  const moscowHours = (now.getUTCHours() + 3) % 24
-  return moscowHours >= 1
-}
 
-function getTodayKey() {
-  const now = new Date()
-  return now.toISOString().split("T")[0]
+  const year = now.getUTCFullYear()
+  const month = now.getUTCMonth()
+  const date = now.getUTCDate()
+  const hour = now.getUTCHours()
+
+  const baseDate = new Date(Date.UTC(year, month, date))
+  if (hour < 5) {
+    // treat it as yesterday
+    baseDate.setUTCDate(baseDate.getUTCDate() - 1)
+  }
+
+  const y = baseDate.getUTCFullYear()
+  const m = String(baseDate.getUTCMonth() + 1).padStart(2, "0")
+  const d = String(baseDate.getUTCDate()).padStart(2, "0")
+
+  return `${y}-${m}-${d}`
 }
 
 function isBingo(phrases) {
