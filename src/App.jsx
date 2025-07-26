@@ -71,7 +71,7 @@ export function App() {
       }
     }
 
-    const newPhrases = shuffle(bingo.phrases)
+    const newPhrases = shuffle(bingo.phrases).slice(0, 25)
 
     const reshapedPhrases = newPhrases.map(
       phrase => ({
